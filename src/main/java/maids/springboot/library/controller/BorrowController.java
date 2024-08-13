@@ -25,7 +25,6 @@ public class BorrowController {
         BorrowingRecord borrowingRecord = borrowingRecordService.borrowBook(bookId, patronId);
         return ResponseEntity.ok(
                 new BorrowResponse("Book borrowed successfully")
-
         );
     }
 

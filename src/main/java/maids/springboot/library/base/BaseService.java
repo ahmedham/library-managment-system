@@ -14,8 +14,11 @@ public class BaseService<T extends BaseEntity<ID>, ID> {
     private BaseRepository<T, ID> baseRepository;
 
 
-    public Optional<T> findById(ID id) {
-        return baseRepository.findById(id);
+    public T findById(ID id) {
+        return baseRepository.findById(id)
+                .orElseThrow(
+                        ()-> new RuntimeException(" not found")
+                );
     }
 
     public List<T> findAll() {
@@ -23,7 +26,6 @@ public class BaseService<T extends BaseEntity<ID>, ID> {
     }
 
     @Transactional
-
     public T insert(T entity) {
 
         if (entity.getId() != null) {
