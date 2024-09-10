@@ -20,16 +20,20 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Handle validation exceptions and return a map of field errors
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
+    public ResponseEntity<Map<String, Object>> handleValidationExceptions(MethodArgumentNotValidException ex, WebRequest request) {
+        Map<String, Object> errorAttributes = createErrorAttributes(ex.getMessage(), request, HttpStatus.UNPROCESSABLE_ENTITY);
+
+        Map<String, String> validationErrors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(   (error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
+            validationErrors.put(fieldName, errorMessage);
         });
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        errorAttributes.put("message","There are validation errors");
+
+        errorAttributes.put("details",validationErrors);
+        return new ResponseEntity<>(errorAttributes, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(BadCredentialsException.class)
@@ -66,10 +70,18 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Map<String, Object>> handleRuntimeExceptions(RuntimeException ex, WebRequest request) {
-        Map<String, Object> errorAttributes = createErrorAttributes(ex.getMessage(), request, HttpStatus.INTERNAL_SERVER_ERROR);
-        errorAttributes.put("error", HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
+        Map<String, Object> errorAttributes = createErrorAttributes(ex.getMessage(), request, HttpStatus.BAD_REQUEST);
+        errorAttributes.put("error", HttpStatus.BAD_REQUEST.getReasonPhrase());
 
-        return new ResponseEntity<>(errorAttributes, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorAttributes, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(RecordNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleRecordNotFoundExceptions(RuntimeException ex, WebRequest request) {
+        Map<String, Object> errorAttributes = createErrorAttributes(ex.getMessage(), request, HttpStatus.NOT_FOUND);
+        errorAttributes.put("error", HttpStatus.NOT_FOUND.getReasonPhrase());
+
+        return new ResponseEntity<>(errorAttributes, HttpStatus.NOT_FOUND);
     }
 
     private Map<String, Object> createErrorAttributes(String message, WebRequest request, HttpStatus status) {

@@ -1,7 +1,12 @@
 package maids.springboot.library.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import maids.springboot.library.base.BaseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +16,10 @@ import java.util.List;
 
 @Table(name = "users")
 @Entity
-public class User extends BaseEntity<Long>  implements UserDetails {
+@Setter
+@Getter
+@Accessors(chain = true)
+public class User extends BaseEntity<Long> implements UserDetails {
 
     @Column(nullable = false)
     private String fullName;
@@ -32,33 +40,6 @@ public class User extends BaseEntity<Long>  implements UserDetails {
     @Override
     public String getUsername() {
         return email;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public User setFullName(String fullName) {
-        this.fullName = fullName;
-        return this;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public User setEmail(String email) {
-        this.email = email;
-        return this;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public User setPassword(String password) {
-        this.password = password;
-        return this;
     }
 }
 

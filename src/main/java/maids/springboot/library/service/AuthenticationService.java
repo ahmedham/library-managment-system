@@ -3,6 +3,8 @@ package maids.springboot.library.service;
 import maids.springboot.library.dto.LoginUserDto;
 import maids.springboot.library.dto.RegisterUserDto;
 import maids.springboot.library.entity.User;
+import maids.springboot.library.exception.DuplicateRecordException;
+import maids.springboot.library.exception.RecordNotFoundException;
 import maids.springboot.library.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +29,7 @@ public class AuthenticationService {
 
         // check email exists
         if(userRepository.findByEmail(data.getEmail()).isPresent()){
-            throw new RuntimeException("The email provided already exists!");
+            throw new DuplicateRecordException("The email provided already exists!");
         }
 
         User user = new User()
@@ -46,7 +48,7 @@ public class AuthenticationService {
                 )
         );
         return userRepository.findByEmail(data.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RecordNotFoundException("User not found"));
     }
 }
 

@@ -1,5 +1,13 @@
 package maids.springboot.library.response;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+@Setter
+@Getter
+@Accessors(chain = true)
 public class RegisterResponse {
 
     private Long id;
@@ -8,31 +16,5 @@ public class RegisterResponse {
 
     private String email;
 
-    public Long getId() {
-        return id;
-    }
-
-    public RegisterResponse setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public RegisterResponse setFullName(String fullName) {
-        this.fullName = fullName;
-        return this;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public RegisterResponse setEmail(String email) {
-        this.email = email;
-        return this;
-    }
 }
 

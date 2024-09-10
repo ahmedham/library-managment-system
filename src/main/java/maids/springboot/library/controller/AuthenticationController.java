@@ -1,6 +1,7 @@
 package maids.springboot.library.controller;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import maids.springboot.library.dto.LoginUserDto;
 import maids.springboot.library.dto.RegisterUserDto;
 import maids.springboot.library.entity.User;
@@ -17,13 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/api/auth")
 @RestController
+@RequiredArgsConstructor
 public class AuthenticationController {
 
-    @Autowired
-    private JwtService jwtService;
+    private final JwtService jwtService;
 
-    @Autowired
-    private AuthenticationService authenticationService;
+    private final AuthenticationService authenticationService;
 
     @PostMapping("/signup")
     public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterUserDto registerUserDto) {
@@ -33,7 +33,6 @@ public class AuthenticationController {
                 .setId(registeredUser.getId())
                 .setFullName(registeredUser.getFullName())
                 .setEmail(registeredUser.getEmail());
-
 
         return ResponseEntity.ok(registerResponse);
     }

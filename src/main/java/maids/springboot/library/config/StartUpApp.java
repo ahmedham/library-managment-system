@@ -1,7 +1,9 @@
 package maids.springboot.library.config;
 
+import maids.springboot.library.dto.BookDto;
+import maids.springboot.library.dto.BorrowingDto;
+import maids.springboot.library.dto.PatronDto;
 import maids.springboot.library.entity.Book;
-import maids.springboot.library.entity.BorrowingRecord;
 import maids.springboot.library.entity.Patron;
 import maids.springboot.library.service.BookService;
 import maids.springboot.library.service.BorrowingRecordService;
@@ -24,41 +26,84 @@ public class StartUpApp implements CommandLineRunner {
     @Autowired
     private BorrowingRecordService borrowingRecordService;
 
+    private  BookDto bookDto;
+
+    private  PatronDto patronDto;
+
     @Override
     public void run(String... args) throws Exception {
 
-        // add books
-        Book effectiveJava = new Book("Effective Java, 3E","Joshua Bloch","2008","0134685997");
-        bookService.insert(effectiveJava);
+        bookDto = new BookDto()
+                        .setTitle("Effective Java, 3E")
+                        .setAuthor("Joshua Bloch")
+                        .setPublicationYear("2008")
+                        .setIsbn("0134685997");
 
-        Book javaIlluminated = new Book("Java Illuminated","Julie Anderson","2020","1284140997");
-        bookService.insert(javaIlluminated);
+        Book effectiveJava = bookService.insert(bookDto);
 
-        Book cleanCode = new Book("Clean Code","Robert C. Martin","2012","9780136083238");
-        bookService.insert(cleanCode);
+        bookDto = new BookDto()
+                .setTitle("Java Illuminated")
+                .setAuthor("Julie Anderson")
+                .setPublicationYear("2020")
+                .setIsbn("1284140997");
+
+        Book javaIlluminated = bookService.insert(bookDto);
+
+        bookDto = new BookDto()
+                .setTitle("Clean Code")
+                .setAuthor("Robert C. Martin")
+                .setPublicationYear("2012")
+                .setIsbn("9780136083238");
+
+        Book cleanCode = bookService.insert(bookDto);
 
         // add patrons
-        Patron ahmed = new Patron("Ahmed", "ahmed@gmail.com","01066361457");
-        patronService.insert(ahmed);
+        patronDto = new PatronDto()
+                .setName("Ahmed")
+                .setEmail("ahmed@gmail.com")
+                .setPhone("01066361457");
 
-        Patron samy = new Patron("Samy", "samy@gmail.com","01066361455");
-        patronService.insert(samy);
 
-        Patron mona = new Patron("Mona", "mona@gmail.com","01066361452");
-        patronService.insert(mona);
+        Patron ahmed =  patronService.insert(patronDto);
+
+        patronDto = new PatronDto()
+                .setName("Samy")
+                .setEmail("samy@gmail.com")
+                .setPhone("01066361455");
+
+        Patron samy = patronService.insert(patronDto);
+
+        patronDto = new PatronDto()
+                .setName("Mona")
+                .setEmail("mona@gmail.com")
+                .setPhone("01066361452");
+
+        Patron mona = patronService.insert(patronDto);
 
 
         // borrowing
 
-        BorrowingRecord borrowingJavaIlluminated = new BorrowingRecord(javaIlluminated, ahmed, LocalDate.now());
+        BorrowingDto borrowingJavaIlluminated = new BorrowingDto()
+                .setBook(javaIlluminated)
+                .setPatron(ahmed)
+                .setBorrowDate(LocalDate.now());
+
         borrowingRecordService.insert(borrowingJavaIlluminated);
 
 
 
-        BorrowingRecord borrowingEffectiveJava = new BorrowingRecord(effectiveJava, samy, LocalDate.now());
+        BorrowingDto borrowingEffectiveJava = new BorrowingDto()
+                .setBook(effectiveJava)
+                .setPatron(samy)
+                .setBorrowDate(LocalDate.now());
+
         borrowingRecordService.insert(borrowingEffectiveJava);
 
-        BorrowingRecord borrowingCleanCode = new BorrowingRecord(cleanCode, mona, LocalDate.now());
+        BorrowingDto borrowingCleanCode = new BorrowingDto()
+                .setBook(cleanCode)
+                .setPatron(mona)
+                .setBorrowDate(LocalDate.now());
+
         borrowingRecordService.insert(borrowingCleanCode);
 
     }

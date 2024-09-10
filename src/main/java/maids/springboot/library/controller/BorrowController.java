@@ -1,24 +1,19 @@
 package maids.springboot.library.controller;
 
-import jakarta.validation.Valid;
-import maids.springboot.library.entity.Book;
+import lombok.RequiredArgsConstructor;
 import maids.springboot.library.entity.BorrowingRecord;
 import maids.springboot.library.response.BorrowResponse;
-import maids.springboot.library.service.BorrowingRecordService;
 import maids.springboot.library.service.BorrowingRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/")
+@RequiredArgsConstructor
 public class BorrowController {
 
-    @Autowired
-    private BorrowingRecordService borrowingRecordService;
-
+    private final BorrowingRecordService borrowingRecordService;
 
     @PostMapping("borrow/{bookId}/patron/{patronId}")
     public ResponseEntity<BorrowResponse> borrowBook(@PathVariable Long bookId, @PathVariable Long patronId) {

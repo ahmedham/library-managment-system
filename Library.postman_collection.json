@@ -1,0 +1,1306 @@
+{
+	"info": {
+		"_postman_id": "8fd3e1c9-6264-43a3-8d03-5c656a2bb759",
+		"name": "Library",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19181254"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullName\":\"ahmed\",\n    \"email\":\"ahmed@gmail.com\",\n    \"password\":\"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/signup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"fullName\":\"ahmed\",\n    \"email\":\"ahmed@gmail.com\",\n    \"password\":\"test\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/signup",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"signup"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 06:32:13 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"fullName\": \"ahmed\",\n    \"email\": \"ahmed@gmail.com\"\n}"
+						}
+					]
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"ahmed@gmail.com\",\n    \"password\":\"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\":\"ahmed@gmail.com\",\n    \"password\":\"test\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 14 Aug 2024 06:35:08 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaG1lZEBnbWFpbC5jb20iLCJpYXQiOjE3MjM2MTczMDgsImV4cCI6MTcyMzYyMDkwOH0.QHJq9lHbxU-xP7_DS5cy9qfGqetGwaxTgt38MAoDV-o\",\n    \"expiresIn\": 3600000\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "books",
+			"item": [
+				{
+					"name": "get all books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/books",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get all books",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/books",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"books"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 03 Sep 2024 22:22:25 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"title\": \"Effective Java, 3E\",\n        \"author\": \"Joshua Bloch\",\n        \"publicationYear\": \"2008\",\n        \"isbn\": \"0134685997\"\n    },\n    {\n        \"id\": 2,\n        \"title\": \"Java Illuminated\",\n        \"author\": \"Julie Anderson\",\n        \"publicationYear\": \"2020\",\n        \"isbn\": \"1284140997\"\n    },\n    {\n        \"id\": 3,\n        \"title\": \"Clean Code\",\n        \"author\": \"Robert C. Martin\",\n        \"publicationYear\": \"2012\",\n        \"isbn\": \"9780136083238\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "find book by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/books/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "find book by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/books/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"books",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 03 Sep 2024 22:22:58 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"title\": \"Effective Java, 3E\",\n    \"author\": \"Joshua Bloch\",\n    \"publicationYear\": \"2008\",\n    \"isbn\": \"0134685997\"\n}"
+						}
+					]
+				},
+				{
+					"name": "insert book",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"Java : Head First\",\n    \"author\": \"Bert Bates\",\n    \"publicationYear\":\"2020\",\n    \"isbn\":\"1212121212\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/books",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "insert book",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\":\"Java : Head First\",\n    \"author\": \"Bert Bates\",\n    \"publicationYear\":\"2020\",\n    \"isbn\":\"1212121212\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/books",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"books"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 03 Sep 2024 22:23:03 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 4,\n    \"title\": \"Java : Head First\",\n    \"author\": \"Bert Bates\",\n    \"publicationYear\": \"2020\",\n    \"isbn\": \"1212121212\"\n}"
+						}
+					]
+				},
+				{
+					"name": "update book",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"Head First Design Patterns\",\n    \"author\": \"Eric Freeman\",\n    \"publicationYear\":\"2004\",\n    \"isbn\": \"0596007124\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/books/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update book",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\":\"Head First Design Patterns\",\n    \"author\": \"Eric Freeman\",\n    \"publicationYear\":\"2004\",\n    \"isbn\": \"0596007124\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/books/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"books",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 03 Sep 2024 22:23:09 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"title\": \"Head First Design Patterns\",\n    \"author\": \"Eric Freeman\",\n    \"publicationYear\": \"2004\",\n    \"isbn\": \"0596007124\"\n}"
+						}
+					]
+				},
+				{
+					"name": "delete book",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"ahmed\",\n    \"author\": \"ahmed\",\n    \"publicationYear\":\"2020\",\n    \"isbn\": \"asas\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/books/4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "patrons",
+			"item": [
+				{
+					"name": "get all patrons",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/patrons",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"patrons"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "get all patrons",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/patrons",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"patrons"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 03 Sep 2024 22:23:20 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"Ahmed\",\n        \"email\": \"ahmed@gmail.com\",\n        \"phone\": \"01066361457\"\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Samy\",\n        \"email\": \"samy@gmail.com\",\n        \"phone\": \"01066361455\"\n    },\n    {\n        \"id\": 3,\n        \"name\": \"Mona\",\n        \"email\": \"mona@gmail.com\",\n        \"phone\": \"01066361452\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "find patron by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/patrons/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"patrons",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "find patron by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/patrons/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"patrons",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 03 Sep 2024 22:23:23 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"Ahmed\",\n    \"email\": \"ahmed@gmail.com\",\n    \"phone\": \"01066361457\"\n}"
+						}
+					]
+				},
+				{
+					"name": "insert patron",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"sally\",\n    \"email\": \"sally@test\",\n    \"phone\":\"010663614\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/patrons",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"patrons"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "insert patron",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"sally\",\n    \"email\": \"sally@test\",\n    \"phone\":\"010663614\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/patrons",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"patrons"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 03 Sep 2024 22:23:26 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 4,\n    \"name\": \"sally\",\n    \"email\": \"sally@test\",\n    \"phone\": \"010663614\"\n}"
+						}
+					]
+				},
+				{
+					"name": "update patron",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"mohammed\",\n    \"email\": \"mohammed@test.com\",\n    \"phone\":\"01144319655\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/patrons/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"patrons",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update patron",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\":\"mohammed\",\n    \"email\": \"mohammed@test.com\",\n    \"phone\":\"01144319655\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/patrons/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"patrons",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 03 Sep 2024 22:23:31 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"mohammed\",\n    \"email\": \"mohammed@test.com\",\n    \"phone\": \"01144319655\"\n}"
+						}
+					]
+				},
+				{
+					"name": "delete patron",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\":\"ahmed\",\n    \"author\": \"ahmed\",\n    \"publicationYear\":\"2020\",\n    \"isbn\": \"asas\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/patrons/4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"patrons",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "borrow",
+			"item": [
+				{
+					"name": "borrow a book",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/borrow/4/patron/4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"borrow",
+								"4",
+								"patron",
+								"4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "borrow a book",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/borrow/4/patron/4",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"borrow",
+										"4",
+										"patron",
+										"4"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 01 Sep 2024 13:00:10 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Book borrowed successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "return a book",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept-Language",
+								"value": "ar",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/return/4/patron/4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"return",
+								"4",
+								"patron",
+								"4"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "return a book",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept-Language",
+										"value": "ar",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/return/4/patron/4",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"return",
+										"4",
+										"patron",
+										"4"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 01 Sep 2024 13:00:25 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Book returned successfully\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaG1lZEBnbWFpbC5jb20iLCJpYXQiOjE3MjU0MDIxMzYsImV4cCI6MTcyNTQwNTczNn0.GHAQ5w0abRP8CdurwHrQJC08zJuobfE2qgOocPyOUt8",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
