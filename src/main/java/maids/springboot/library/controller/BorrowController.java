@@ -17,7 +17,7 @@ public class BorrowController {
 
     @PostMapping("borrow/{bookId}/patron/{patronId}")
     public ResponseEntity<BorrowResponse> borrowBook(@PathVariable Long bookId, @PathVariable Long patronId) {
-        BorrowingRecord borrowingRecord = borrowingRecordService.borrowBook(bookId, patronId);
+        borrowingRecordService.borrowBook(bookId, patronId);
         return ResponseEntity.ok(
                 new BorrowResponse("Book borrowed successfully")
         );

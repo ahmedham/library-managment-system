@@ -18,10 +18,10 @@ public interface BorrowingRecordRepository extends BaseRepository<BorrowingRecor
             " WHERE borrowing.book.id = :bookId AND borrowing.returnDate IS NULL")
     BorrowingRecord BookAlreadyBorrowed(Long bookId);
 
+
     @Query("SELECT borrowing FROM BorrowingRecord borrowing" +
             " WHERE borrowing.book.id = :bookId AND borrowing.patron.id = :patronId" +
-            " AND borrowing.returnDate IS NULL")
-    List<BorrowingRecord> findActiveBorrowingRecords(Long bookId, Long patronId);
-
+            " AND borrowing.returnDate IS NULL ORDER BY borrowing.borrowDate DESC")
+    Optional<BorrowingRecord> findLatestActiveBorrowingRecord(Long bookId, Long patronId);
 
 }

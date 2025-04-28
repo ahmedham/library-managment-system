@@ -1,10 +1,14 @@
 package maids.springboot.library.service;
 
+import lombok.RequiredArgsConstructor;
 import maids.springboot.library.dto.PatronDto;
 import maids.springboot.library.entity.Patron;
+import maids.springboot.library.exception.DeletePatronException;
 import maids.springboot.library.exception.DuplicateRecordException;
 import maids.springboot.library.exception.RecordNotFoundException;
+import maids.springboot.library.mapper.PatronMapper;
 import maids.springboot.library.repositories.PatronRepository;
+import maids.springboot.library.validators.PatronValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -14,13 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PatronService {
 
-    @Autowired
-    private BorrowingRecordService borrowingRecordService;
+    private final PatronRepository patronRepository;
 
-    @Autowired
-    private PatronRepository patronRepository;
+    private final PatronMapper patronMapper;
+
+    private final PatronValidator patronValidator;
 
     @Cacheable(value = "findAllPatrons",key="#root.methodName")
     public List<Patron> findAll() {
@@ -46,7 +51,7 @@ public class PatronService {
             throw new DuplicateRecordException("This Patron is already exists");
         }
 
-        return patronRepository.save(convertToEntity(dto));
+        return patronRepository.save(patronMapper.mapToPatronEntity(dto));
     }
 
     @Transactional
@@ -63,7 +68,7 @@ public class PatronService {
                 () -> new RecordNotFoundException("Patron not found")
         );
 
-        updateEntityProperties(existingEntity, convertToEntity(dto));
+        patronMapper.updatePatronFromDto(dto, existingEntity);
 
         return patronRepository.save(existingEntity);
     }
@@ -72,28 +77,8 @@ public class PatronService {
     @CacheEvict(value= {"findPatronById", "findAllPatrons"}, key = "#root.methodName", allEntries=true)
     public void deleteById(Long id) {
 
-        if (borrowingRecordService.existsByPatronId(id)) {
-            throw new RuntimeException("Cannot delete patron as they have active borrowing records.");
-        }
+        patronValidator.validatePatronNotBorrowedBeforeDelete(id);
 
         patronRepository.deleteById(id);
     }
-
-    protected void updateEntityProperties(Patron existingEntity, Patron newEntity) {
-        existingEntity.setName(newEntity.getName());
-        existingEntity.setEmail(newEntity.getEmail());
-        existingEntity.setPhone(newEntity.getPhone());
-    }
-
-    public Patron convertToEntity(PatronDto dto){
-
-        Patron patron = new Patron();
-        patron.setName(dto.getName());
-        patron.setEmail(dto.getEmail());
-        patron.setPhone(dto.getPhone());
-
-        return patron;
-
-    }
-
 }

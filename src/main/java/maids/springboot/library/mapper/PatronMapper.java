@@ -1,10 +1,10 @@
 package maids.springboot.library.mapper;
 
-import maids.springboot.library.dto.BookDto;
 import maids.springboot.library.dto.PatronDto;
-import maids.springboot.library.entity.Book;
 import maids.springboot.library.entity.Patron;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -15,9 +15,12 @@ public interface PatronMapper {
     
     Patron mapToPatronEntity(PatronDto patronDto);
 
-
     List<PatronDto> mapToPatronDtoList(List<Patron> patrons);
 
     List<Patron> mapToPatronEntityList(List<PatronDto> patronDtos);
+
+    @Mapping(target = "id", ignore = true)
+    void updatePatronFromDto(PatronDto dto, @MappingTarget Patron entity);
+
 
 }

@@ -1,5 +1,7 @@
 package maids.springboot.library.config;
 
+import jdk.jfr.Label;
+import lombok.RequiredArgsConstructor;
 import maids.springboot.library.dto.BookDto;
 import maids.springboot.library.dto.BorrowingDto;
 import maids.springboot.library.dto.PatronDto;
@@ -10,25 +12,27 @@ import maids.springboot.library.service.BorrowingRecordService;
 import maids.springboot.library.service.PatronService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
 @Component
+@RequiredArgsConstructor
 public class StartUpApp implements CommandLineRunner {
 
-    @Autowired
-    private BookService bookService;
+    @Lazy
+    private final BookService bookService;
 
-    @Autowired
-    private PatronService patronService;
+    @Lazy
+    private final PatronService patronService;
 
-    @Autowired
-    private BorrowingRecordService borrowingRecordService;
+    @Lazy
+    private final BorrowingRecordService borrowingRecordService;
 
-    private  BookDto bookDto;
+    private BookDto bookDto;
 
-    private  PatronDto patronDto;
+    private PatronDto patronDto;
 
     @Override
     public void run(String... args) throws Exception {

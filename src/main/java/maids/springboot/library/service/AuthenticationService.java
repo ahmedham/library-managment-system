@@ -1,5 +1,6 @@
 package maids.springboot.library.service;
 
+import lombok.RequiredArgsConstructor;
 import maids.springboot.library.dto.LoginUserDto;
 import maids.springboot.library.dto.RegisterUserDto;
 import maids.springboot.library.entity.User;
@@ -13,17 +14,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AuthenticationService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
+    private final AuthenticationManager authenticationManager;
 
     public User signup(RegisterUserDto data) {
 

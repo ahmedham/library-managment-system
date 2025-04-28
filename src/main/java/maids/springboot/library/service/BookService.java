@@ -3,10 +3,12 @@ package maids.springboot.library.service;
 import lombok.RequiredArgsConstructor;
 import maids.springboot.library.dto.BookDto;
 import maids.springboot.library.entity.Book;
+import maids.springboot.library.exception.DeleteBookException;
 import maids.springboot.library.exception.DuplicateRecordException;
 import maids.springboot.library.exception.RecordNotFoundException;
+import maids.springboot.library.mapper.BookMapper;
 import maids.springboot.library.repositories.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import maids.springboot.library.validators.BookValidator;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
@@ -20,10 +22,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookService {
 
-    @Lazy
-    private final BorrowingRecordService borrowingRecordService;
-
     private final BookRepository bookRepository;
+
+    private final BookMapper bookMapper;
+
+    private final  BookValidator bookValidator;
 
     @Cacheable(value = "findAllBooks",key="#root.methodName")
     public List<Book> findAll() {
@@ -46,7 +49,7 @@ public class BookService {
             throw new DuplicateRecordException("This Book is already exists");
         }
 
-        return bookRepository.save(convertToEntity(dto));
+        return bookRepository.save(bookMapper.mapToBookEntity(dto));
     }
 
     @Transactional
@@ -63,7 +66,7 @@ public class BookService {
                 () -> new RecordNotFoundException("Book not found")
         );
 
-        updateEntityProperties(existingEntity, convertToEntity(dto));
+        bookMapper.updateBookFromDto(dto,existingEntity);
 
         return bookRepository.save(existingEntity);
     }
@@ -72,29 +75,8 @@ public class BookService {
     @CacheEvict(value= {"findBookById", "findAllBooks"}, key = "#root.methodName", allEntries=true)
     public void deleteById(Long id) {
 
-        if (borrowingRecordService.existsByBookId(id)) {
-            throw new RuntimeException("Cannot delete book as it is being borrowed.");
-        }
+        bookValidator.validateBookNotBorrowedBeforeDelete(id);
 
         bookRepository.deleteById(id);
     }
-
-    protected void updateEntityProperties(Book existingEntity, Book newEntity) {
-        existingEntity.setTitle(newEntity.getTitle());
-        existingEntity.setAuthor(newEntity.getAuthor());
-        existingEntity.setIsbn(newEntity.getIsbn());
-        existingEntity.setPublicationYear(newEntity.getPublicationYear());
-    }
-
-    public Book convertToEntity(BookDto dto){
-
-        Book book = new Book();
-        book.setTitle(dto.getTitle());
-        book.setAuthor(dto.getAuthor());
-        book.setIsbn(dto.getIsbn());
-        book.setPublicationYear(dto.getPublicationYear());
-
-        return book;
-    }
-
 }

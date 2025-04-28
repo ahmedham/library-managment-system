@@ -19,7 +19,7 @@ import java.util.List;
 @Setter
 @Getter
 @Accessors(chain = true)
-public class User extends BaseEntity<Long> implements UserDetails {
+public class User extends BaseEntity<Long> implements UserDetails{
 
     @Column(nullable = false)
     private String fullName;

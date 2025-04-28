@@ -42,7 +42,7 @@ Ensure that your `application.properties` file in the `src/main/resources` direc
     
     # Database configuration
     spring.datasource.url=jdbc:mysql://localhost:3306/library_db
-    spring.datasource.username=root
+    spring.datasource.username=username
     spring.datasource.password=password
     spring.jpa.hibernate.ddl-auto=create-drop
     spring.jpa.show-sql=true
