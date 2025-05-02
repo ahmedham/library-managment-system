@@ -1,16 +1,14 @@
 package maids.springboot.library.config;
 
-import jdk.jfr.Label;
 import lombok.RequiredArgsConstructor;
 import maids.springboot.library.dto.BookDto;
 import maids.springboot.library.dto.BorrowingDto;
 import maids.springboot.library.dto.PatronDto;
-import maids.springboot.library.entity.Book;
-import maids.springboot.library.entity.Patron;
+import maids.springboot.library.mapper.BookMapper;
+import maids.springboot.library.mapper.PatronMapper;
 import maids.springboot.library.service.BookService;
 import maids.springboot.library.service.BorrowingRecordService;
 import maids.springboot.library.service.PatronService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -30,6 +28,10 @@ public class StartUpApp implements CommandLineRunner {
     @Lazy
     private final BorrowingRecordService borrowingRecordService;
 
+    private final BookMapper bookMapper;
+
+    private final PatronMapper patronMapper;
+
     private BookDto bookDto;
 
     private PatronDto patronDto;
@@ -43,7 +45,7 @@ public class StartUpApp implements CommandLineRunner {
                         .setPublicationYear("2008")
                         .setIsbn("0134685997");
 
-        Book effectiveJava = bookService.insert(bookDto);
+        BookDto effectiveJava = bookService.insert(bookDto);
 
         bookDto = new BookDto()
                 .setTitle("Java Illuminated")
@@ -51,7 +53,7 @@ public class StartUpApp implements CommandLineRunner {
                 .setPublicationYear("2020")
                 .setIsbn("1284140997");
 
-        Book javaIlluminated = bookService.insert(bookDto);
+        BookDto javaIlluminated = bookService.insert(bookDto);
 
         bookDto = new BookDto()
                 .setTitle("Clean Code")
@@ -59,7 +61,7 @@ public class StartUpApp implements CommandLineRunner {
                 .setPublicationYear("2012")
                 .setIsbn("9780136083238");
 
-        Book cleanCode = bookService.insert(bookDto);
+        BookDto cleanCode = bookService.insert(bookDto);
 
         // add patrons
         patronDto = new PatronDto()
@@ -68,28 +70,28 @@ public class StartUpApp implements CommandLineRunner {
                 .setPhone("01066361457");
 
 
-        Patron ahmed =  patronService.insert(patronDto);
+        PatronDto ahmed =  patronService.insert(patronDto);
 
         patronDto = new PatronDto()
                 .setName("Samy")
                 .setEmail("samy@gmail.com")
                 .setPhone("01066361455");
 
-        Patron samy = patronService.insert(patronDto);
+        PatronDto samy = patronService.insert(patronDto);
 
         patronDto = new PatronDto()
                 .setName("Mona")
                 .setEmail("mona@gmail.com")
                 .setPhone("01066361452");
 
-        Patron mona = patronService.insert(patronDto);
+        PatronDto mona = patronService.insert(patronDto);
 
 
         // borrowing
 
         BorrowingDto borrowingJavaIlluminated = new BorrowingDto()
-                .setBook(javaIlluminated)
-                .setPatron(ahmed)
+                .setBook(bookMapper.mapToBookEntity(javaIlluminated))
+                .setPatron(patronMapper.mapToPatronEntity(ahmed))
                 .setBorrowDate(LocalDate.now());
 
         borrowingRecordService.insert(borrowingJavaIlluminated);
@@ -97,15 +99,15 @@ public class StartUpApp implements CommandLineRunner {
 
 
         BorrowingDto borrowingEffectiveJava = new BorrowingDto()
-                .setBook(effectiveJava)
-                .setPatron(samy)
+                .setBook(bookMapper.mapToBookEntity(effectiveJava))
+                .setPatron(patronMapper.mapToPatronEntity(samy))
                 .setBorrowDate(LocalDate.now());
 
         borrowingRecordService.insert(borrowingEffectiveJava);
 
         BorrowingDto borrowingCleanCode = new BorrowingDto()
-                .setBook(cleanCode)
-                .setPatron(mona)
+                .setBook(bookMapper.mapToBookEntity(cleanCode))
+                .setPatron(patronMapper.mapToPatronEntity(mona))
                 .setBorrowDate(LocalDate.now());
 
         borrowingRecordService.insert(borrowingCleanCode);

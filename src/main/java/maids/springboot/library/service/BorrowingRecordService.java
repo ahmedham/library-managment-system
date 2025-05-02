@@ -1,18 +1,21 @@
 package maids.springboot.library.service;
 
 import lombok.RequiredArgsConstructor;
+import maids.springboot.library.dto.BookDto;
 import maids.springboot.library.dto.BorrowingDto;
+import maids.springboot.library.dto.PatronDto;
 import maids.springboot.library.entity.Book;
 import maids.springboot.library.entity.BorrowingRecord;
 import maids.springboot.library.entity.Patron;
 import maids.springboot.library.exception.BorrowingException;
+import maids.springboot.library.mapper.BookMapper;
 import maids.springboot.library.mapper.BorrowingMapper;
+import maids.springboot.library.mapper.PatronMapper;
 import maids.springboot.library.repositories.BorrowingRecordRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -27,13 +30,17 @@ public class BorrowingRecordService {
 
     private final BorrowingMapper borrowingMapper;
 
-    public List<BorrowingRecord> getAllBorrowingRecords() {
-        return borrowingRecordRepository.findAll();
-    }
+    private final BookMapper bookMapper;
+
+    private final PatronMapper patronMapper;
 
     public BorrowingRecord borrowBook(Long bookId, Long patronId){
-        Book book = bookService.findById(bookId);
-        Patron patron = patronService.findById(patronId);
+        BookDto bookDto = bookService.findById(bookId);
+        PatronDto patronDto = patronService.findById(patronId);
+
+        Book book = bookMapper.mapToBookEntity(bookDto);
+        Patron patron = patronMapper.mapToPatronEntity(patronDto);
+
 
         validateBookNotAlreadyBorrowed(bookId);
 
@@ -48,7 +55,7 @@ public class BorrowingRecordService {
 
     @Transactional
     public BorrowingRecord returnBook(Long bookId, Long patronId) {
-        // Assuming findLatestActiveBorrowingRecord is a method that fetches only the most recent active record
+
         BorrowingRecord borrowingRecord = borrowingRecordRepository
                 .findLatestActiveBorrowingRecord(bookId, patronId)
                 .orElseThrow(() -> new BorrowingException("No valid borrowing record found"));
@@ -68,15 +75,6 @@ public class BorrowingRecordService {
         if (borrowingRecordRepository.BookAlreadyBorrowed(bookId) != null) {
             throw new BorrowingException("The book is already borrowed");
         }
-    }
-
-
-    public Boolean existsByBookId(Long id){
-        return borrowingRecordRepository.existsByBookId(id);
-    }
-
-    public Boolean existsByPatronId(Long id){
-        return borrowingRecordRepository.existsByPatronId(id);
     }
 
 }

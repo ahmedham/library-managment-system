@@ -26,8 +26,7 @@ public class BookController {
 
     @GetMapping
     public ResponseEntity<List<BookDto>> findAll() {
-        List<Book> books = bookService.findAll();
-        List<BookDto> bookDtos = bookMapper.mapToBookDtoList(books);
+        List<BookDto> bookDtos = bookService.findAll();
 
         return ResponseEntity.ok(bookDtos);
 
@@ -35,9 +34,7 @@ public class BookController {
 
     @GetMapping("{id}")
     public ResponseEntity<BookDto> findById(@PathVariable Long id) {
-        Book book = bookService.findById(id);
-
-        BookDto bookDto = bookMapper.mapToBookDto(book);
+        BookDto bookDto = bookService.findById(id);
 
         return ResponseEntity.ok(bookDto);
     }
@@ -45,19 +42,14 @@ public class BookController {
 
     @PostMapping
     public ResponseEntity<BookDto> insert(@Valid @RequestBody BookDto book) {
-
-        Book savedBook = bookService.insert(book);
-
-        BookDto bookDto = bookMapper.mapToBookDto(savedBook);
+        BookDto bookDto = bookService.insert(book);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(bookDto);
     }
 
     @PutMapping("{id}")
     public ResponseEntity<BookDto> update(@PathVariable Long id, @Valid @RequestBody BookDto book) {
-        Book updatedBook =  bookService.update(id, book);
-
-        BookDto bookDto = bookMapper.mapToBookDto(updatedBook);
+        BookDto bookDto =  bookService.update(id, book);
 
         return  ResponseEntity.ok(bookDto);
     }

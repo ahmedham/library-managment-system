@@ -1,5 +1,6 @@
-package maids.springboot.library;
+package maids.springboot.library.IntegrationTests;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import maids.springboot.library.config.TestSecurityConfig;
 import maids.springboot.library.controller.BookController;
 import maids.springboot.library.dto.BookDto;
@@ -20,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -43,18 +45,14 @@ public class BookControllerTest {
     @MockBean
     private BookMapper bookMapper;
 
+    private ObjectMapper mapper;
     private Book book;
+    private Book inputBook;
     private BookDto bookDto;
 
     @BeforeEach
     void setUp() {
 
-        book = new Book();
-        book.setId(1L);
-        book.setTitle("Effective Java");
-        book.setAuthor("Joshua Bloch");
-        book.setPublicationYear("2020");
-        book.setIsbn("0134685991");
 
         bookDto = new BookDto();
         bookDto.setId(1L);
@@ -63,21 +61,37 @@ public class BookControllerTest {
         bookDto.setPublicationYear("2020");
         bookDto.setIsbn("0134685991");
 
+
+        inputBook = new Book();
+        inputBook.setTitle("Effective Java");
+        inputBook.setAuthor("Joshua Bloch");
+        inputBook.setPublicationYear("2020");
+        inputBook.setIsbn("0134685991");
+
     }
 
     @Test
     void findAll_ReturnsListOfBooks() throws Exception {
-        when(bookService.findAll()).thenReturn(List.of(book));
+
+        book = new Book();
+        book.setId(1L);
+        book.setTitle("Effective Java");
+        book.setAuthor("Joshua Bloch");
+        book.setPublicationYear("2020");
+        book.setIsbn("0134685991");
+
+        when(bookService.findAll()).thenReturn(List.of(bookDto));
         when(bookMapper.mapToBookDtoList(List.of(book))).thenReturn(List.of(bookDto));
 
         mockMvc.perform(get("/api/books"))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].title").value("Effective Java"));
     }
 
     @Test
     void findById_ExistingId_ReturnsBook() throws Exception {
-        when(bookService.findById(1L)).thenReturn(Optional.of(book).get());
+        when(bookService.findById(1L)).thenReturn(Optional.of(bookDto).get());
         when(bookMapper.mapToBookDto(book)).thenReturn(bookDto);
 
         mockMvc.perform(get("/api/books/{id}", 1L))
@@ -96,12 +110,14 @@ public class BookControllerTest {
 
     @Test
     void insert_ValidBook_ReturnsCreatedBook() throws Exception {
-        when(bookService.insert(any(BookDto.class))).thenReturn(book);
+        when(bookService.insert(any(BookDto.class))).thenReturn(bookDto);
         when(bookMapper.mapToBookDto(book)).thenReturn(bookDto);
+
+        mapper = new ObjectMapper();
 
         mockMvc.perform(post("/api/books")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"title\": \"Effective Java\", \"author\": \"Joshua Bloch\", \"isbn\": \"0134685991\", \"publicationYear\":\"2020\"}"))
+                        .content(mapper.writeValueAsString(inputBook)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.title").value("Effective Java"));
     }
@@ -109,12 +125,16 @@ public class BookControllerTest {
 
     @Test
     void update_ExistingId_ReturnsUpdatedBook() throws Exception {
-        when(bookService.update(eq(1L), any(BookDto.class))).thenReturn(book);
+        when(bookService.update(eq(1L), any(BookDto.class))).thenReturn(bookDto);
         when(bookMapper.mapToBookDto(book)).thenReturn(bookDto);
+
+        mapper = new ObjectMapper();
+
 
         mockMvc.perform(put("/api/books/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"title\": \"Effective Java\", \"author\": \"Joshua Bloch\", \"isbn\": \"0134685991\", \"publicationYear\":\"2020\"}"))
+                        .content(mapper.writeValueAsString(inputBook))
+                )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("Effective Java"));
     }

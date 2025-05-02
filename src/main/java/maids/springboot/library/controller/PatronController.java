@@ -29,29 +29,21 @@ public class PatronController {
 
     @GetMapping
     public ResponseEntity<List<PatronDto>> findAll() {
-
-        List<Patron> patrons = patronService.findAll();
-        List<PatronDto> patronDtos = patronMapper.mapToPatronDtoList(patrons);
+        List<PatronDto> patronDtos = patronService.findAll();
 
         return ResponseEntity.ok(patronDtos);
     }
 
     @GetMapping("{id}")
     public ResponseEntity<PatronDto> findById(@PathVariable Long id) {
-        Patron patron = patronService.findById(id);
-
-        PatronDto patronDto = patronMapper.mapToPatronDto(patron);
+        PatronDto patronDto = patronService.findById(id);
 
         return ResponseEntity.ok(patronDto);
     }
 
     @PostMapping
     public ResponseEntity<PatronDto> insert(@RequestBody @Valid PatronDto patron) {
-
-        Patron savedPatron = patronService.insert(patron);
-
-        PatronDto patronDto = patronMapper.mapToPatronDto(savedPatron);
-
+        PatronDto patronDto = patronService.insert(patron);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(patronDto);
     }
@@ -59,9 +51,7 @@ public class PatronController {
     @PutMapping("{id}")
     public ResponseEntity<PatronDto> update(@PathVariable Long id, @Valid @RequestBody PatronDto patron) {
 
-        Patron updatedPatron = patronService.update(id, patron);
-
-        PatronDto patronDto = patronMapper.mapToPatronDto(updatedPatron);
+        PatronDto patronDto = patronService.update(id, patron);
 
         return ResponseEntity.ok(patronDto);
 

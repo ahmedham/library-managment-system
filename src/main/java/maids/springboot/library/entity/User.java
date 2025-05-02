@@ -11,6 +11,7 @@ import maids.springboot.library.base.BaseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,7 +20,10 @@ import java.util.List;
 @Setter
 @Getter
 @Accessors(chain = true)
-public class User extends BaseEntity<Long> implements UserDetails{
+public class User extends BaseEntity<Long> implements UserDetails {
+
+    @Serial
+    private static final long serialVersionUID = 8818209940857041444L;
 
     @Column(nullable = false)
     private String fullName;

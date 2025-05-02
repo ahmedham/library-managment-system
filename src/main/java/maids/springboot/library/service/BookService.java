@@ -29,38 +29,43 @@ public class BookService {
     private final  BookValidator bookValidator;
 
     @Cacheable(value = "findAllBooks",key="#root.methodName")
-    public List<Book> findAll() {
-        return bookRepository.findAll();
+    public List<BookDto> findAll() {
+
+        List<Book> books = bookRepository.findAll();
+
+        return bookMapper.mapToBookDtoList(books);
+
     }
 
     @Cacheable(value = "findBookById", key = "#root.methodName")
-    public Book findById(Long id) {
-        return bookRepository.findById(id)
+    public BookDto findById(Long id) {
+        Book book = bookRepository.findById(id)
                 .orElseThrow(
                         ()-> new RecordNotFoundException("Book not found")
                 );
+
+        return bookMapper.mapToBookDto(book);
     }
 
     @Transactional
     @CacheEvict(value= {"findBookById", "findAllBooks"}, key = "#root.methodName", allEntries=true)
-    public Book insert(BookDto dto) {
+    public BookDto insert(BookDto dto) {
 
         if(bookRepository.findByTitle(dto.getTitle()).isPresent() || bookRepository.findByIsbn(dto.getIsbn()).isPresent()){
-            throw new DuplicateRecordException("This Book is already exists");
+            throw new DuplicateRecordException("This book already exists");
         }
 
-        return bookRepository.save(bookMapper.mapToBookEntity(dto));
+        Book book = bookMapper.mapToBookEntity(dto);
+
+        Book savedBook = bookRepository.save(book);
+
+        return bookMapper.mapToBookDto(savedBook);
     }
+
 
     @Transactional
     @CacheEvict(value= {"findBookById", "findAllBooks"}, key = "#root.methodName", allEntries=true)
-    public List<Book> insert(List<Book> entities) {
-        return bookRepository.saveAll(entities);
-    }
-
-    @Transactional
-    @CacheEvict(value= {"findBookById", "findAllBooks"}, key = "#root.methodName", allEntries=true)
-    public Book update(Long id,BookDto dto) {
+    public BookDto update(Long id,BookDto dto) {
 
         Book existingEntity = bookRepository.findById(id).orElseThrow(
                 () -> new RecordNotFoundException("Book not found")
@@ -68,7 +73,9 @@ public class BookService {
 
         bookMapper.updateBookFromDto(dto,existingEntity);
 
-        return bookRepository.save(existingEntity);
+        Book savedBook = bookRepository.save(existingEntity);
+
+        return bookMapper.mapToBookDto(savedBook);
     }
 
     @Transactional

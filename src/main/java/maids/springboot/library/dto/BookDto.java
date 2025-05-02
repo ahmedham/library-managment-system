@@ -8,11 +8,17 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import maids.springboot.library.base.BaseDto;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Setter
 @Getter
 @Accessors(chain = true)
 @NoArgsConstructor
-public class BookDto extends BaseDto<Long> {
+public class BookDto extends BaseDto<Long>  implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -6983147459395067941L;
 
     @NotEmpty(message = "Title is mandatory")
     @Size(max = 255, message = "Title cannot exceed 255 characters")

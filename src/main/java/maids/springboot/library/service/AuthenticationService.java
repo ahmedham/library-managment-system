@@ -7,6 +7,8 @@ import maids.springboot.library.entity.User;
 import maids.springboot.library.exception.DuplicateRecordException;
 import maids.springboot.library.exception.RecordNotFoundException;
 import maids.springboot.library.repositories.UserRepository;
+import maids.springboot.library.response.LoginResponse;
+import maids.springboot.library.response.RegisterResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,9 +23,11 @@ public class AuthenticationService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final JwtService jwtService;
+
     private final AuthenticationManager authenticationManager;
 
-    public User signup(RegisterUserDto data) {
+    public RegisterResponse signup(RegisterUserDto data) {
 
         // check email exists
         if(userRepository.findByEmail(data.getEmail()).isPresent()){
@@ -35,18 +39,33 @@ public class AuthenticationService {
                 .setEmail(data.getEmail())
                 .setPassword(passwordEncoder.encode(data.getPassword()));
 
-        return userRepository.save(user);
+        User registeredUser = userRepository.save(user);
+
+        return new RegisterResponse()
+                .setId(registeredUser.getId())
+                .setFullName(registeredUser.getFullName())
+                .setEmail(registeredUser.getEmail());
     }
 
-    public User authenticate(LoginUserDto data) {
+    public LoginResponse authenticate(LoginUserDto data) {
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         data.getEmail(),
                         data.getPassword()
                 )
         );
-        return userRepository.findByEmail(data.getEmail())
+
+        User loggedInUser =  userRepository.findByEmail(data.getEmail())
                 .orElseThrow(() -> new RecordNotFoundException("User not found"));
+
+
+        String jwtToken = jwtService.generateToken(loggedInUser);
+
+        return new LoginResponse()
+                .setToken(jwtToken)
+                .setExpiresIn(jwtService.getExpirationTime());
+
     }
 }
 

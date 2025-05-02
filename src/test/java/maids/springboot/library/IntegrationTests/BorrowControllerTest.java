@@ -1,4 +1,4 @@
-package maids.springboot.library;
+package maids.springboot.library.IntegrationTests;
 
 import maids.springboot.library.config.TestSecurityConfig;
 import maids.springboot.library.controller.BorrowController;

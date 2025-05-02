@@ -21,33 +21,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
-    private final JwtService jwtService;
 
     private final AuthenticationService authenticationService;
 
     @PostMapping("/signup")
     public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterUserDto registerUserDto) {
-        User registeredUser = authenticationService.signup(registerUserDto);
+        RegisterResponse registeredUser = authenticationService.signup(registerUserDto);
 
-        RegisterResponse registerResponse = new RegisterResponse()
-                .setId(registeredUser.getId())
-                .setFullName(registeredUser.getFullName())
-                .setEmail(registeredUser.getEmail());
-
-        return ResponseEntity.ok(registerResponse);
+        return ResponseEntity.ok(registeredUser);
     }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@Valid @RequestBody LoginUserDto loginUserDto) {
-        User authenticatedUser = authenticationService.authenticate(loginUserDto);
+        LoginResponse authenticatedUser = authenticationService.authenticate(loginUserDto);
 
-        String jwtToken = jwtService.generateToken(authenticatedUser);
-
-        LoginResponse loginResponse = new LoginResponse()
-                .setToken(jwtToken)
-                .setExpiresIn(jwtService.getExpirationTime());
-
-        return ResponseEntity.ok(loginResponse);
+        return ResponseEntity.ok(authenticatedUser);
     }
 }
 

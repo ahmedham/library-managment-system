@@ -2,6 +2,7 @@ package maids.springboot.library.service;
 
 import lombok.RequiredArgsConstructor;
 import maids.springboot.library.dto.PatronDto;
+import maids.springboot.library.entity.Book;
 import maids.springboot.library.entity.Patron;
 import maids.springboot.library.exception.DeletePatronException;
 import maids.springboot.library.exception.DuplicateRecordException;
@@ -28,21 +29,28 @@ public class PatronService {
     private final PatronValidator patronValidator;
 
     @Cacheable(value = "findAllPatrons",key="#root.methodName")
-    public List<Patron> findAll() {
-        return patronRepository.findAll();
+    public List<PatronDto> findAll() {
+
+        List<Patron> patrons = patronRepository.findAll();
+
+        return patronMapper.mapToPatronDtoList(patrons);
     }
 
     @Cacheable(value = "findPatronById",key="#root.methodName")
-    public Patron findById(Long id) {
-        return patronRepository.findById(id)
+    public PatronDto findById(Long id) {
+
+        Patron patron = patronRepository.findById(id)
                 .orElseThrow(
                         ()-> new RecordNotFoundException("Patron not found")
                 );
+
+        return patronMapper.mapToPatronDto(patron);
+
     }
 
     @Transactional
     @CacheEvict(value= {"findPatronById", "findAllPatrons"}, key = "#root.methodName", allEntries=true)
-    public Patron insert(PatronDto dto) {
+    public PatronDto insert(PatronDto dto) {
 
         if(
                 patronRepository.findByEmail(dto.getEmail()).isPresent() ||
@@ -51,18 +59,16 @@ public class PatronService {
             throw new DuplicateRecordException("This Patron is already exists");
         }
 
-        return patronRepository.save(patronMapper.mapToPatronEntity(dto));
+        Patron patron = patronMapper.mapToPatronEntity(dto);
+
+        Patron savedPatron = patronRepository.save(patron);
+
+        return patronMapper.mapToPatronDto(savedPatron);
     }
 
     @Transactional
     @CacheEvict(value= {"findPatronById", "findAllPatrons"}, key = "#root.methodName", allEntries=true)
-    public List<Patron> insert(List<Patron> entities) {
-        return patronRepository.saveAll(entities);
-    }
-
-    @Transactional
-    @CacheEvict(value= {"findPatronById", "findAllPatrons"}, key = "#root.methodName", allEntries=true)
-    public Patron update(Long id,PatronDto dto) {
+    public PatronDto update(Long id,PatronDto dto) {
 
         Patron existingEntity = patronRepository.findById(id).orElseThrow(
                 () -> new RecordNotFoundException("Patron not found")
@@ -70,7 +76,9 @@ public class PatronService {
 
         patronMapper.updatePatronFromDto(dto, existingEntity);
 
-        return patronRepository.save(existingEntity);
+        Patron savedPatron = patronRepository.save(existingEntity);
+
+        return patronMapper.mapToPatronDto(savedPatron);
     }
 
     @Transactional

@@ -4,9 +4,15 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Setter
 @Getter
-public class RegisterUserDto {
+public class RegisterUserDto implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 281871415606058758L;
 
     @NotEmpty(message = "Full Name is mandatory")
     private String fullName;

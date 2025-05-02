@@ -10,6 +10,8 @@ import lombok.experimental.Accessors;
 import maids.springboot.library.base.BaseDto;
 import maids.springboot.library.base.BaseEntity;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
@@ -17,7 +19,10 @@ import java.time.LocalDate;
 @Getter
 @Accessors(chain = true)
 @NoArgsConstructor
-public class BorrowingRecord extends BaseEntity<Long> {
+public class BorrowingRecord extends BaseEntity<Long> implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 2301062060087288217L;
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
